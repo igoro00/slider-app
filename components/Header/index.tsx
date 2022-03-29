@@ -16,8 +16,10 @@ import type { NextPage } from "next";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import HomeIcon from '@mui/icons-material/Home';
+import { AccessibilityNew } from "@mui/icons-material";
 
-const Header: React.FC = () => {
+const Header: React.FC<{title:string}> = ({title}) => {
 	const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 	const router = useRouter()
 	function navigate(url:string){
@@ -40,7 +42,7 @@ const Header: React.FC = () => {
 							<MenuIcon />
 						</IconButton>
 						<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-							News
+							{title}
 						</Typography>
 						<SwipeableDrawer
 							anchor="left"
@@ -50,10 +52,16 @@ const Header: React.FC = () => {
 						>
 							<div>
 								<List>
-									<ListItem button key={"Main"} onClick={()=>navigate("/")}>
-										<ListItemText primary={"Main"} />
+									<ListItem button onClick={()=>navigate("/")}>
+										<ListItemIcon>
+											<AccessibilityNew />
+										</ListItemIcon>
+										<ListItemText primary={"Move"} />
 									</ListItem>
-									<ListItem button key={"Home"} onClick={()=>navigate("/home")}>
+									<ListItem button onClick={()=>navigate("/home")}>
+										<ListItemIcon>
+											<HomeIcon />
+										</ListItemIcon>
 										<ListItemText primary={"Home"} />
 									</ListItem>
 								</List>
