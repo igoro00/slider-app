@@ -167,11 +167,12 @@ type GLTFResult = GLTF & {
 export default function Scene(props: JSX.IntrinsicElements['group']&{yaw:number,pitch:number}) {
   const group = useRef<THREE.Group>()
   const { nodes, materials } = useGLTF('/scene.glb') as GLTFResult
-  const [{ x }] = useSpring({ x: props.yaw, config: { mass: 5, tension: 1000, friction: 50, precision: 0.0001 } }, [props.yaw])
-	const [{ y }] = useSpring({ y: props.pitch, config: { mass: 5, tension: 1000, friction: 50, precision: 0.0001 } }, [props.pitch])
+  const { x } = useSpring({ x: -props.yaw })
+	const { y } = useSpring({ y: -props.pitch })
+  
   return (
     <group ref={group} {...props} dispose={null}>
-      <a.group scale={1} rotation={[0,0,0]}>
+      <a.group scale={1} rotation-y={x}>
         <a.group rotation={[-Math.PI / 2, 0, 0]}>
           <a.mesh geometry={nodes.mesh0_meshnode_0.geometry} material={nodes.mesh0_meshnode_0.material} />
           <a.mesh geometry={nodes.mesh1_meshnode_1.geometry} material={nodes.mesh1_meshnode_1.material} />
@@ -216,7 +217,7 @@ export default function Scene(props: JSX.IntrinsicElements['group']&{yaw:number,
           <a.mesh geometry={nodes.mesh12_meshnode_12_1.geometry} material={nodes.mesh12_meshnode_12_1.material} />
           <a.mesh geometry={nodes.mesh13_meshnode_13_1.geometry} material={nodes.mesh13_meshnode_13_1.material} />
         </a.group>
-        <a.group position={[0, 0.03, 0]} rotation={[0,0,0]}>
+        <a.group position={[0, 0.03, 0]} rotation-x={y}>
           <a.group position={[0, 0, -0.03]}>
             <a.mesh geometry={nodes.mesh0_meshnode_0_3.geometry} material={nodes.mesh0_meshnode_0_3.material} />
             <a.mesh geometry={nodes.mesh1_meshnode_1_3.geometry} material={nodes.mesh1_meshnode_1_3.material} />

@@ -10,6 +10,7 @@ import {
 import { Box } from "@mui/system";
 import type { NextPage } from "next";
 import { useState } from "react";
+import ButtonGroupControl from "../components/ButtonGroupControl";
 import Header from "../components/Header";
 import { useLocalStorage } from "../hooks";
 import { runGcode } from "../utils/klipperApiClient";
@@ -22,18 +23,17 @@ const Home: NextPage = () => {
 	const chPosBy = (n: number) => {
 		position + n >= 0 && setPosition(position + n);
 	};
-	const ButtonAddSub: React.FC<{ n: number }> = ({ n }) => (
-		<Button onClick={() => chPosBy(n)} variant="contained" color={n<0?"error":"primary"}>
-			{n}
-		</Button>
-	);
 
 	return (
 		<div>
-			<Header title="Home"/>
+			<Header title="Home" />
 			<Container maxWidth="sm">
-				<Box paddingY={5}>
-					<Stack spacing={2} divider={<Divider orientation="vertical" flexItem />} alignItems="center">
+				<Box component="div" paddingY={5}>
+					<Stack
+						spacing={2}
+						divider={<Divider orientation="vertical" flexItem />}
+						alignItems="center"
+					>
 						<Button
 							onClick={() => {
 								runGcode("G28 Z");
@@ -51,17 +51,12 @@ const Home: NextPage = () => {
 							<Typography variant="subtitle1" component="p">
 								Current Position: {position}mm
 							</Typography>
-							<ButtonGroup disabled={!homed}>
-								<ButtonAddSub n={-100}/>
-								<ButtonAddSub n={-10}/>
-								<ButtonAddSub n={-1}/>
-								<Button variant="contained" disabled>
-									-
-								</Button>
-								<ButtonAddSub n={1}/>
-								<ButtonAddSub n={10}/>
-								<ButtonAddSub n={100}/>
-							</ButtonGroup>
+							<ButtonGroupControl
+								possibleValues={[-100, -10, -1, 0, 1, 10, 100]}
+								disabled={!homed}
+								setValue={setPosition}
+								value={position}
+							/>
 							<Button
 								onClick={() => {
 									setMaxZ(position);

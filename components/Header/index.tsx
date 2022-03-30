@@ -28,7 +28,7 @@ const Header: React.FC<{title:string}> = ({title}) => {
 	}
 	return (
 		<div>
-			<Box sx={{ flexGrow: 1 }}>
+			<Box component="div" sx={{ flexGrow: 1 }}>
 				<AppBar position="static">
 					<Toolbar>
 						<IconButton
