@@ -10,6 +10,7 @@ import ButtonGroupControl from "../components/ButtonGroupControl";
 const Home: NextPage = () => {
 	const [yaw, setYaw] = useState(0);
 	const [pitch, setPitch] = useState(0);
+	const [z, setZ] = useState(0);
 
 	return (
 		<div>
@@ -18,7 +19,7 @@ const Home: NextPage = () => {
 				<Box component="div" paddingY={5}>
 					<Stack dir="column" gap={5} alignItems="center">
 						{/* convert to radians */}
-						<SliderModel yaw={yaw * 0.0174532925} pitch={pitch * 0.0174532925} />
+						<SliderModel yaw={yaw * 0.0174532925} pitch={pitch * 0.0174532925} z={z} />
 						<div>
 							<Typography variant="h4" component="h2" align="center">
 								Yaw
@@ -37,6 +38,16 @@ const Home: NextPage = () => {
 								possibleValues={[-180, -30, -15, -1, 0, 1, 15, 30, 180]}
 								setValue={setPitch}
 								value={pitch}
+							/>
+						</div>
+            <div>
+							<Typography variant="h4" component="h2" align="center">
+								Position
+							</Typography>
+							<ButtonGroupControl
+								possibleValues={[-10, -1, -0.1, 0, 0.1, 1, 10]}
+								setValue={setZ}
+								value={z}
 							/>
 						</div>
 					</Stack>

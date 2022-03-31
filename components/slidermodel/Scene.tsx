@@ -6,7 +6,7 @@ import * as THREE from 'three'
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
-import { a, SpringValue, useSpring } from '@react-spring/three'
+import { a, useSpring } from '@react-spring/three'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -164,15 +164,16 @@ type GLTFResult = GLTF & {
 }
 
 
-export default function Scene(props: JSX.IntrinsicElements['group']&{yaw:number,pitch:number}) {
+export default function Scene(props: JSX.IntrinsicElements['group']&{yaw:number,pitch:number,z:number}) {
   const group = useRef<THREE.Group>()
   const { nodes, materials } = useGLTF('/scene.glb') as GLTFResult
   const { x } = useSpring({ x: -props.yaw })
 	const { y } = useSpring({ y: -props.pitch })
+	const { z } = useSpring({ z: -props.z })
   
   return (
     <group ref={group} {...props} dispose={null}>
-      <a.group scale={1} rotation-y={x}>
+      <a.group scale={1} rotation-y={x} position-x={z.to([0,100],[0.283,0.858])}>
         <a.group rotation={[-Math.PI / 2, 0, 0]}>
           <a.mesh geometry={nodes.mesh0_meshnode_0.geometry} material={nodes.mesh0_meshnode_0.material} />
           <a.mesh geometry={nodes.mesh1_meshnode_1.geometry} material={nodes.mesh1_meshnode_1.material} />
